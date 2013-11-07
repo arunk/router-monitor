@@ -8,6 +8,9 @@ Use pip to install required packages
 
 $ pip install -r requirements.pip
 
+Make a copy of config.yaml.example to config.yaml
+Modify config.yaml to suit your router values
+
 ## Monitor Router
 Use crontab to run check.py
 
