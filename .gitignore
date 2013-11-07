@@ -1,3 +1,4 @@
 usage.db
 *.pyc
 run.log
+config.yaml
