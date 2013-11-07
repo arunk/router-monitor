@@ -3,22 +3,29 @@ import urllib2, base64
 import lxml.html as lh
 import sqlite3
 from datetime import datetime
+import os
 
+ROUTER_ADDR = '192.168.1.1'
+ROUTER_ADMIN = 'admin'
+ROUTER_PWD = 'admin'
+RXTX_PATH = '/statswan.cmd'
 TX_XPATH = './/tr[3]/td[9]'
 RX_XPATH = './/tr[3]/td[5]'
 
+BASE = os.path.abspath(os.path.dirname(__file__))
+
 passman = urllib2.HTTPPasswordMgrWithDefaultRealm()
-passman.add_password(None, 'http://192.168.1.1/', 'admin', 'admin')
+passman.add_password(None, 'http://%s/' % ROUTER_ADDR, ROUTER_ADMIN, ROUTER_PWD)
 urllib2.install_opener(urllib2.build_opener(urllib2.HTTPBasicAuthHandler(passman)))
 
-req = urllib2.Request('http://192.168.1.1/statswan.cmd')
+req = urllib2.Request('http://%s%s' % (ROUTER_ADDR, RXTX_PATH))
 content = urllib2.urlopen(req).read()
 doc = lh.fromstring(content)
 
 tx = doc.xpath(TX_XPATH)[0].text_content()
 rx = doc.xpath(RX_XPATH)[0].text_content()
 
-conn = sqlite3.connect('/home/arun/Projects/router-monitor/usage.db')
+conn = sqlite3.connect(os.path.join(BASE, 'usage.db'))
 
 c = conn.cursor()
 
