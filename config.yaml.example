@@ -5,3 +5,5 @@ router_rxtx_path: statswan.cmd
 tx_xpath: .//tr[3]/td[9]
 rx_xpath: .//tr[3]/td[5]
 start_cycle_day: 11
+server_addr: localhost
+server_port: 8080

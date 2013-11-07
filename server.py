@@ -13,6 +13,8 @@ install(SQLitePlugin(dbfile='./usage.db'))
 
 cfg = yaml.load(open('config.yaml').read())
 
+#http://code.activestate.com/recipes/577081-humanized-representation-of-a-number-of-bytes/
+#with a fix for correctly depicting float values
 def humanize_bytes(bytes, precision=1):
     """Return a humanized string representation of a number of bytes.
 
@@ -251,5 +253,5 @@ def plot(db, year, month, day):
 
     return static_file(filename, root='static')
 
-run(host='localhost', port=8080, reloader=True)
+run(host=cfg['server_addr'], port=cfg['server_port'], reloader=True)
 
