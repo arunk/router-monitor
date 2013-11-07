@@ -7,11 +7,11 @@ import matplotlib.pyplot as plt
 import os
 from collections import defaultdict
 import matplotlib
+import yaml
 
 install(SQLitePlugin(dbfile='./usage.db'))
 
-cfg = dict()
-cfg['start_cycle_date'] = 11
+cfg = yaml.load(open('config.yaml').read())
 
 def humanize_bytes(bytes, precision=1):
     """Return a humanized string representation of a number of bytes.
@@ -55,7 +55,7 @@ def humanize_bytes(bytes, precision=1):
 def index(db, ago=0):
     now = datetime.now()
     target_date = now - timedelta(days=ago)
-    if target_date.day > cfg['start_cycle_date']:
+    if target_date.day > cfg['start_cycle_day']:
         from_date = "{year:04d}-{month:02d}-{day:02d}".format(
             year=target_date.year, month=target_date.month, day=11)
     else:

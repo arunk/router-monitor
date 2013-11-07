@@ -4,21 +4,24 @@ import lxml.html as lh
 import sqlite3
 from datetime import datetime
 import os
+import yaml
 
-ROUTER_ADDR = '192.168.1.1'
-ROUTER_ADMIN = 'admin'
-ROUTER_PWD = 'admin'
-RXTX_PATH = '/statswan.cmd'
-TX_XPATH = './/tr[3]/td[9]'
-RX_XPATH = './/tr[3]/td[5]'
+cfg = yaml.load(open('config.yaml').read())
+
+ROUTER_ADDR = cfg['router_addr']
+ROUTER_USER = cfg['router_user']
+ROUTER_PWD = cfg['router_password']
+ROUTER_RXTX_PATH = cfg['router_rxtx_path']
+TX_XPATH = cfg['tx_xpath']
+RX_XPATH = cfg['rx_xpath']
 
 BASE = os.path.abspath(os.path.dirname(__file__))
 
 passman = urllib2.HTTPPasswordMgrWithDefaultRealm()
-passman.add_password(None, 'http://%s/' % ROUTER_ADDR, ROUTER_ADMIN, ROUTER_PWD)
+passman.add_password(None, 'http://%s/' % ROUTER_ADDR, ROUTER_USER, ROUTER_PWD)
 urllib2.install_opener(urllib2.build_opener(urllib2.HTTPBasicAuthHandler(passman)))
 
-req = urllib2.Request('http://%s%s' % (ROUTER_ADDR, RXTX_PATH))
+req = urllib2.Request('http://%s/%s' % (ROUTER_ADDR, ROUTER_RXTX_PATH))
 content = urllib2.urlopen(req).read()
 doc = lh.fromstring(content)
 

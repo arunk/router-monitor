@@ -1,0 +1,7 @@
+router_addr: 192.168.1.1
+router_user: admin
+router_password: admin
+router_rxtx_path: statswan.cmd
+tx_xpath: .//tr[3]/td[9]
+rx_xpath: .//tr[3]/td[5]
+start_cycle_day: 11
