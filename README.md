@@ -15,6 +15,7 @@ Modify config.yaml to suit your router values
 Use crontab to run check.py
 
 Sample crontab
+
 */5 * * * * cd router-monitor/ && ./check.py 2>&1 > ./run.log
 
 Runs check.py every 5 minutes
